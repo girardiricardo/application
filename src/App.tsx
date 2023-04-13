@@ -1,5 +1,5 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { theme, fetchOdds } from '@golden-gamble/utils';
+import { theme, fetchFootballOdds } from '@golden-gamble/utils';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
@@ -27,7 +27,7 @@ const App = () => {
   }, [])
 
   const handleFetchData = async () => {
-    return fetchOdds()
+    return fetchFootballOdds()
       .then((data) => setOdds(data));
   }
 
