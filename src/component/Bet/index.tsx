@@ -1,10 +1,13 @@
+import { useState, useEffect } from 'react';
+
+import { publishEvent, ADD_BET, MY_BETS_DRAWER } from '@golden-gamble/utils';
+
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { Odds } from "../../App"
-import { useState } from 'react';
 
 type Props = {
   odd: Odds
@@ -12,6 +15,19 @@ type Props = {
 
 const Bet = ({ odd }: Props) => {
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (selectedTeam) {
+      handleDispatchEvent(selectedTeam);
+    }
+  }, [selectedTeam]);
+
+  const handleDispatchEvent = (team: string) => {
+    const winner = team === odd.teamA.name ? odd.teamA : odd.teamB;
+
+    publishEvent(ADD_BET, { ...odd, winner });
+    publishEvent(MY_BETS_DRAWER, null);
+  }
 
   return (
     <Grid item xs={5}>
